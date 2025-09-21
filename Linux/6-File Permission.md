@@ -126,6 +126,8 @@ setfacl -m m::- file1
 
 # group ACL
 - groupadd staff
+- ***setfacl modify user:username:permission(rwx), others***
+- setfacl -m u:mamun:rwx,rose:r--, rahim:--- file1
 - setfacl -m g:staff:rw file1
 - getfacl tutorial
 # Directory Permission:
@@ -133,7 +135,14 @@ setfacl -m m::- file1
 - touch acldir/file1
 - ls -l acldir
 -setfacl -R -m u:rahim:rw acldir ; -R = recursive
+# ACL add (group)
+- setfacl recursivly modify user:username:permission(rwx), others
+- setfacl -R -m u:rahim:rw,rose:r--, rahim:--- file1
+- getfacl file1
+- ls -l file1
 # ACL remove (group)
 - setfacl -x g:staff file1
+
 # ACL Remove from file:
 - setfacl -b tutorial
+
