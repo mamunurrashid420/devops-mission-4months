@@ -83,4 +83,4 @@
 -   **/var** -- variable data (logs, cache, spool)
 
 ---
-![Directory Screenshot](Linux/image/Directory.png)
+![Directory Image](https://github.com/mamunurrashid420/devops-mission-4months/blob/main/Linux/image/Directory.png?raw=true)
