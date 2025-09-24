@@ -81,3 +81,6 @@
 -   **/tmp** -- temporary files\
 -   **/usr** -- user apps & packages\
 -   **/var** -- variable data (logs, cache, spool)
+
+---
+![Directory Screenshot](Linux/image/Directory.png)
