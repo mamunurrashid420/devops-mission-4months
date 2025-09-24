@@ -111,3 +111,45 @@ echo "*************"
 uptime 
 
 ```
+###
+``` 
+#!/bin/sh
+for i in $(seq 1 21); do
+    echo "Number: $i"
+done
+
+fruits="apple banana cherry date"
+for fruit in $fruits; do
+    echo "fruit: $fruit"
+done
+```
+
+### Database Backup 
+```bash 
+#!/bin/bash
+
+# Current date and time
+DATE=$(date +%F_%H-%M-%S)
+
+# Database names and backup directory
+DB_NAMES=("db_1" "db_2")
+BACKUP_DIR="/root/backup_db"
+
+# Ensure backup directory exists
+mkdir -p "$BACKUP_DIR"
+
+# Perform database backups
+for DB_NAME in "${DB_NAMES[@]}"; do
+    mysqldump -u root -p'password' "$DB_NAME" > "$BACKUP_DIR/${DB_NAME}_$DATE.sql"
+    echo "Database backup completed: $BACKUP_DIR/${DB_NAME}_$DATE.sql"
+done
+
+# Wait for 10 seconds
+sleep 10
+
+# Delete backups older than 3 days
+find "$BACKUP_DIR" -type f -name "*.sql" -mtime +3 -exec rm {} \;
+
+echo "Old backups cleaned up."
+
+```
