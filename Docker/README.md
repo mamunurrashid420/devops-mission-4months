@@ -1,5 +1,6 @@
 ## Docker Architecture
-<img src="https://github.com/Anurag-Verma-1996/3-Months-Targets/blob/main/Docker/Architecture.png" width="500" height="300">
+<img src="https://github.com/mamunurrashid420/devops-mission-4months/blob/main/Linux/image/Docker_architecture.png" width="500" height="300">
+
 ## Basic Docker Commands
 - `attach` Attach local standard input, output, and error streams to a running container
 - `build` Build an image from a Dockerfile
