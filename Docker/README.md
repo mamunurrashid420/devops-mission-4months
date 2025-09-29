@@ -42,3 +42,9 @@
 - `update` Update configuration of one or more containers
 - `version` Show the Docker version information
 - `wait` Block until one or more containers stop, then print their exit codes
+### Volume 
+-  `Named volume`: docker volume create my-vol
+-  `docker run -d --name devtest -v myvol2:/app nginx:latest`
+-  `Anonymous volume`: docker run -d -P --name web -v /webapp training/webapp python app.py
+-  `Bind mount` : docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py
+- `tmpfs mount` :  docker run -d --name web -v /run --tmpfs /run:rw,noexec,nosuid,size=65536k training/webapp python app.py
