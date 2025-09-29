@@ -48,3 +48,13 @@
 -  `Anonymous volume`: docker run -d -P --name web -v /webapp training/webapp python app.py
 -  `Bind mount` : docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py
 - `tmpfs mount` :  docker run -d --name web -v /run --tmpfs /run:rw,noexec,nosuid,size=65536k training/webapp python app.py
+### Named volume 
+1. created by us
+2. managed by docker
+3. persist if container is deleted/remove
+4. can be shared between containers
+5. /var/lib/docker/volumes/
+## command 
+- `docker volume  create my_name_volume`
+- `docker run -dit --name named_container_ex -v my_name_volume:/data alpine sh`
+
