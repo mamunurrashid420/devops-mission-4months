@@ -57,4 +57,40 @@
 ## command 
 - `docker volume  create my_name_volume`
 - `docker run -dit --name named_container_ex -v my_name_volume:/data alpine sh`
+## Anonymous volume 
+1.Create by docker 
+ - dokcer run -it --name anon_volume_ex -v /data alpine sh 
+ ## Bind Mount 
+ - docker run -dit --name bind_mount -v  /home/ubuntu/my_data:/data alpine sh
+ ## tmnfs mount
+ - data stored in sensitive data(key)
 
+### Docker Network 
+## There are 5 types of networks in docker 
+1. Bridge 
+ - Local container network 
+ - By default connected to network 
+ - communication with internet via NAT( docker container)
+ ```
+ docker network create my_bridge
+docker run -d --name c1 --network my_bridge nginx
+
+ ```
+2. Host 
+- there is  no nat or bridge 
+- container host using network stack 
+- container ip = host ip 
+- `Limitation`: some host cannot  bind at a time  in container 
+- use case: performance app , monitoring agents 
+3. Overlay
+- Multi-hosting Network 
+- using kubernetes 
+- vxlan 
+4. Macvlan 
+- each container isolate mac address 
+- A container appears as a separate physical device on the network.
+- No Nat
+- Through ip in DHCP 
+5. None 
+- No network 
+Link: https://github.com/mamunurrashid420/Docker_network_Bridge-
