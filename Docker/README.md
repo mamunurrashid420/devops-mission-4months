@@ -73,6 +73,8 @@
  - communication with internet via NAT( docker container)
  ```
  docker network create my_bridge
+ docker network ls 
+ docker network inspect my_bridge
 docker run -d --name c1 --network my_bridge nginx
 
  ```
