@@ -96,3 +96,44 @@ docker run -d --name c1 --network my_bridge nginx
 5. None 
 - No network 
 Link: https://github.com/mamunurrashid420/Docker_network_Bridge-
+
+### Basic command for Docker 
+- `docker images ls`
+- `docker image pull nginx`
+-  `docker image inspect nginx`
+- `docker image history nginx`
+- `docker image tag nginx:latest nginx:v1`
+-  `docker rmi nginx:v1`
+- `docker image prune -a`
+- `docker rmi $(docker images -aq)`
+- `docker rm $(docker ps -aq)`
+
+
+### `.dockerignore` file is the best practice to ignore the file while building the image.
+1. Smaller image size
+
+    - Unnecessary files (like .git/, node_modules/, __pycache__/, .env) won’t be copied into the image.
+
+2. Faster build times
+
+    - Less files copied → smaller build context → faster Docker builds.
+
+4. Better caching
+
+    - With fewer irrelevant changes, Docker layer caching works more efficiently.
+
+5. Security
+
+   -  Sensitive files (e.g. .env, private keys, config files) won’t accidentally end up in the image.
+
+## `.dockerignore`
+```bash
+.git
+node_modules
+.env
+*.log
+__pycache__/
+*.pyc
+Dockerfile
+docker-compose.yml
+```
