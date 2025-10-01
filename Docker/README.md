@@ -174,3 +174,11 @@ CMD ["echo", "Hello, World!"]
 FROM python:3.11
 ENTRYPOINT ["python", "app.py"]
 ```
+
+### Key Differences 
+| Instruction    | Runs When? | Can Override at `docker run`?                                                               | Common Use                                         |
+| -------------- | ---------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| **RUN**        | Build time | ❌ No                                                                                        | Install packages, setup environment                |
+| **CMD**        | Runtime    | ✅ Yes                                                                                       | Default command (but optional to override)         |
+| **ENTRYPOINT** | Runtime    | ⚠️ Partially (you can pass extra args, but not replace fully unless `--entrypoint` is used) | Force a container to always run a specific command |
+
