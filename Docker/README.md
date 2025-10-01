@@ -137,3 +137,40 @@ __pycache__/
 Dockerfile
 docker-compose.yml
 ```
+### Different between `CMD` and `ENTRYPOINT` and `RUN`
+🔹 1. RUN
+
+- Executes during build time (when you build the image).
+
+- Used to install dependencies, create files, etc.
+
+- The result is stored as a new layer in the image.
+
+```
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install -y curl
+```
+ - This installs curl into the image permanently. It won’t run when the container starts.
+
+🔹 2. CMD
+
+- Executes during runtime (when you run the container).
+
+- Defines the default command to run when the container starts.
+
+- Can be overridden when running the container.
+
+```
+FROM ubuntu:20.04
+CMD ["echo", "Hello, World!"]
+```
+🔹 3. ENTRYPOINT
+- Also runs at container start time.
+- Defines the main command for the container – less likely to be overridden.
+
+- Good for fixed commands where the container should behave like an executable.
+
+```
+FROM python:3.11
+ENTRYPOINT ["python", "app.py"]
+```
