@@ -74,3 +74,30 @@ COPY --from=builder /app/build /usr/share/nginx/html
 ```
 docker build --target builder -t myapp-builder .
 ```
+## Witout Muti-stage
+```
+FROM node:latest
+WORKDIR /app
+COPY package*.json ./
+RUN npm install 
+COPY . .
+RUN npm run build 
+EXPOSE 3000 
+CMD ["npm","run","start'] 
+```
+
+### multi-stage
+```
+FROM node:alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM node:alpine AS production
+WORKDIR /app
+COPY --from=builder /app/build /app/build
+RUN npm install -g serve
+EXPOSE 3000
+CMD["serve","-s","build","-l","3000"]
