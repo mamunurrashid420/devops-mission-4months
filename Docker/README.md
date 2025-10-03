@@ -107,6 +107,9 @@ Link: https://github.com/mamunurrashid420/Docker_network_Bridge-
 - `docker image prune -a`
 - `docker rmi $(docker images -aq)`
 - `docker rm $(docker ps -aq)`
+- `docker container prune`
+- `docker container ls -a`
+- `docker inspect container_id`
 
 
 ### `.dockerignore` file is the best practice to ignore the file while building the image.
