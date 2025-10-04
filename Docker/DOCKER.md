@@ -101,3 +101,120 @@ COPY --from=builder /app/build /app/build
 RUN npm install -g serve
 EXPOSE 3000
 CMD["serve","-s","build","-l","3000"]
+```
+### Java 
+```
+FROM adoptopenjdk/openjdk11 
+EXPOSE 8080
+ENV APP_NAME /usr/src/app
+COPY target/*.jar $APP_NAME/app.jar
+WORKDIR $APP_HOME
+CMD["java","-jar","app.jar"]
+```
+### multi-stage Dockerfile
+```
+# --------------------------
+# Stage 1: Build the JAR file
+# --------------------------
+FROM maven:3.8.7-openjdk-11 AS builder
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy Maven configuration first (better caching for dependencies)
+COPY pom.xml .
+
+# Pre-download dependencies (only if pom.xml changes)
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Build the application (skip tests for faster build in CI/CD)
+RUN mvn clean package -DskipTests
+
+# --------------------------
+# Stage 2: Run the application
+# --------------------------
+FROM eclipse-temurin:11-jre AS production
+# ^ Slimmer runtime-only image (no need for full JDK in prod)
+
+# Set working directory
+WORKDIR /app
+
+# Copy built jar from builder stage
+COPY --from=builder /app/target/*.jar app.jar
+
+# Expose application port
+EXPOSE 8080
+
+# Set default command
+CMD ["java", "-jar", "app.jar"]
+
+```
+### Base image for build stage
+
+``FROM maven:3.8.7-openjdk-11 AS builder``
+
+
+- Includes Maven + JDK 11 → required for building Java apps.
+
+- We name the stage builder.
+
+### Working directory
+
+`WORKDIR /app`
+
+
+- All operations happen inside /app.
+
+### Dependency caching
+
+`COPY pom.xml .`
+`RUN mvn dependency:go-offline -B`
+
+
+- Copies only pom.xml first, so Maven can cache dependencies.
+
+- Saves time in CI/CD because dependencies won’t be re-downloaded unless pom.xml changes.
+
+### Copy application source code
+
+`COPY src ./src`
+- Copies source files into the container.
+
+### Build JAR
+
+`RUN mvn clean package -DskipTests`
+
+- Builds the JAR file into target/.
+
+- Skips tests (optional — remove -DskipTests if you want tests to run).
+
+### Slim runtime image
+
+`FROM eclipse-temurin:11-jre AS production`
+
+
+- Uses a smaller JRE-only image for running (lighter than full JDK).
+
+- This keeps your final Docker image small and secure.
+
+```Copy built JAR
+
+COPY --from=builder /app/target/*.jar app.jar
+
+
+Expose port
+
+EXPOSE 8080```
+
+
+Exposes port for the application (change if your app uses another).
+
+Start the app
+
+CMD ["java", "-jar", "app.jar"]
+
+
+Entry point for running your Spring Boot (or any Java JAR) app.
