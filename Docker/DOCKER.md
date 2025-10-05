@@ -218,3 +218,25 @@ CMD ["java", "-jar", "app.jar"]
 
 
 Entry point for running your Spring Boot (or any Java JAR) app.
+
+```
+## .Net core
+```
+FROM mcr.microsoft.com/dotnet/sdk:8.o AS build-layers
+WORKDIR /app
+COPY *.csproj ./
+RUN dotnet restore
+# copy the rest of the application and build it 
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Build runtime image 
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+
+# Expose port 5053 for your application 
+EXPOSE 5035
+# set the entry point \
+ENTRYPOINT ["dotnet","DotNetMongoCRUDApp.dill"]
+```
