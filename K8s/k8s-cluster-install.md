@@ -35,69 +35,69 @@ network:
   ```
   - apply `sudo netplan apply`
 
-2.1.  Update all nodes
-`sudo apt update`
+    2.1.  Update all nodes
+    `sudo apt update`
 
-2.2. Disable swap on all nodes
-`sudo swapoff -a`
+    2.2. Disable swap on all nodes
+    `sudo swapoff -a`
 
-2.3. Disable swap on startup
-`sudo vim /etc/fstab`
+    2.3. Disable swap on startup
+    `sudo vim /etc/fstab`
 
-2.4. reboot all nodes
-`sudo init 6`
+    2.4. reboot all nodes
+    `sudo init 6`
 
 3. Installing Kubernetes components on all nodes (Master & Worker Node).
 
-3.1. Configure modules (Master & Worker Node).
-```
-cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-overlay
-br_netfilter
-EOF
-```
-- Load modules (Master & Worker Node)
-`sudo modprobe overlay`
-`sudo modprobe br_netfilter`
+    3.1. Configure modules (Master & Worker Node).
+    ```
+    cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+    overlay
+    br_netfilter
+    EOF
+    ```
+    - Load modules (Master & Worker Node)
+    `sudo modprobe overlay`
+    `sudo modprobe br_netfilter`
 
-3.2 Configure Networking (Master & Worker Node)
-configure sysctl (Master & Worker Node)
-```
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-iptables  = 1
-net.bridge.bridge-nf-call-ip6tables = 1
-net.ipv4.ip_forward                 = 1
-EOF
-```
-- Apply new settings (Master & Worker Node)
-`sudo sysctl --system`
+    3.2 Configure Networking (Master & Worker Node)
+    configure sysctl (Master & Worker Node)
+    ```
+    cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+    net.bridge.bridge-nf-call-iptables  = 1
+    net.bridge.bridge-nf-call-ip6tables = 1
+    net.ipv4.ip_forward                 = 1
+    EOF
+    ```
+    - Apply new settings (Master & Worker Node)
+    `sudo sysctl --system`
 
-3.3. Install containerd (Master & Worker Node)
-```
-sudo apt-get update && sudo apt-get install -y containerd
-containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
-sudo sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/g' /etc/containerd/config.toml
-sudo systemctl restart containerd
-sudo systemctl enable containerd
-```
+    3.3. Install containerd (Master & Worker Node)
+    ```
+    sudo apt-get update && sudo apt-get install -y containerd
+    containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+    sudo sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/g' /etc/containerd/config.toml
+    sudo systemctl restart containerd
+    sudo systemctl enable containerd
+    ```
 
-3.5 Install Kubernetes Management Tools (Master & Worker Node).
-```
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl
-sudo apt-get install -y apt-transport-https ca-certificates curl
+    3.5 Install Kubernetes Management Tools (Master & Worker Node).
+    ```
+    sudo apt-get update
+    sudo apt-get install -y ca-certificates curl
+    sudo apt-get install -y apt-transport-https ca-certificates curl
 
 
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-```
-```
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
-```
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    ```
+    ```
+    sudo apt-get update
+    sudo apt-get install -y kubelet kubeadm kubectl
+    sudo apt-mark hold kubelet kubeadm kubectl
+    ```
 4. Initialization the Kubernetes Cluster (Master Node).
 ```
 kubeadm init 
