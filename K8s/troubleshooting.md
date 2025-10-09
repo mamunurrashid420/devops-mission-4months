@@ -1,6 +1,6 @@
 ## If you facing this type of issue
-```
- kubectl get pods
+```bash
+## kubectl get pods
 E1009 04:00:44.672608    1301 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://10.1.0.4:6443/api?timeout=32s\": dial tcp 10.
 E1009 04:00:44.673913    1301 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://10.1.0.4:6443/api?timeout=32s\": dial tcp 10.
 E1009 04:00:44.675214    1301 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://10.1.0.4:6443/api?timeout=32s\": dial tcp 10.
