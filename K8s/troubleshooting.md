@@ -42,3 +42,31 @@ checking this issue
     systemctl restart docker
     ```
 
+- Now check 
+    ```
+    kubectl get pods
+    # or 
+    kubectl get nodes
+    ```
+- Output 
+- `kubect get pods -A`
+    ## ✅ Kubernetes System Pods Status
+
+    Below is the current status of all system pods running in the cluster:
+
+    ```bash
+    NAMESPACE         NAME                                       READY   STATUS    RESTARTS        AGE
+    kube-system       calico-kube-controllers-689744956f-f6t9l   1/1     Running   1 (2m22s ago)   16h
+    kube-system       calico-node-bkhkm                          1/1     Running   1 (7m33s ago)   16h
+    kube-system       calico-node-dzb59                          1/1     Running   1 (2m22s ago)   16h
+    kube-system       calico-node-m5v5q                          1/1     Running   0               65s
+    kube-system       coredns-668d6bf9bc-gxpxl                   1/1     Running   1 (2m22s ago)   16h
+    kube-system       coredns-668d6bf9bc-npmgp                   1/1     Running   1 (2m22s ago)   16h
+    kube-system       etcd-master                                1/1     Running   1 (2m22s ago)   16h
+    kube-system       kube-apiserver-master                      1/1     Running   1 (2m22s ago)   16h
+    kube-system       kube-controller-manager-master             1/1     Running   1 (2m22s ago)   16h
+    kube-system       kube-proxy-4vfcn                           1/1     Running   1 (57s ago)     65s
+    kube-system       kube-proxy-nkv8k                           1/1     Running   1 (7m33s ago)   16h
+    kube-system       kube-proxy-wc5ls                           1/1     Running   1 (2m22s ago)   16h
+    kube-system       kube-scheduler-master                      1/1     Running   1 (2m22s ago)   16h
+    tigera-operator   tigera-operator-789496d6f5-gsqr2           1/1     Running   1 (2m22s ago)   16h
