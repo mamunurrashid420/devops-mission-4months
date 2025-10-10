@@ -53,3 +53,23 @@ pipeline {
     }
 }
 ```
+pipeline {
+    agent any
+    parameters{
+        choice (name: "Branch_name", choices: ['main','Dev','feature1'])
+    }
+    stages {
+        stage('Git Checkout') {
+            steps {
+               git branch:  "${params.Branch_name}", url: 'https://github.com/mamunurrashid420/FullStack-Blogging-App.git'
+            }
+        }
+        stage("hello world"){
+            steps {
+                echo "hello world"
+            }
+        }
+    }
+}
+
+```
