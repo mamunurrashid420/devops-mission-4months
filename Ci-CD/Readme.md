@@ -71,3 +71,24 @@ post {
 	}
 }
 ```
+## Git Action 
+-   `core concepts`: workflow->Job->step->action
+-  `Triggers`: `on:push`, `on:pull_request`, `on:workflow_dispatch`, `on: schedule`
+- `Runner`: `ubuntu-latest`, `windows-latest`, `macos-latest`
+- `Jobs`: `name`, `runs-on`, `steps`
+- `Steps`: `name`, `uses`, `run`, `with`, `env`
+- `Actions`: `checkout`, `setup-node`, `npm install`, `npm run build`, `deploy`
+- `Secrets`: `GITHUB_TOKEN`, `NPM_TOKEN`
+
+- Git Action on Build 
+```bash
+name: Build and Push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: mamunurrashid123/my-project
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+```
+- Git Action on Deploy 
+- Link https://github.com/marketplace/actions/ssh-remote-commands
