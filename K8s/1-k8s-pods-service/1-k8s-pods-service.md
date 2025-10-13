@@ -79,3 +79,34 @@ Pic 1: Nginx Pod
 </p>
 
 
+## What is the service?
+
+
+## What is a Private Registry?
+A private registry is a container image registry that requires authentication to access the images stored within it. Unlike public registries (like Docker Hub), private registries are typically used by organizations to store proprietary or sensitive container images. Access to these images is restricted, and users must provide credentials to pull them.
+### Using Private Registry in a Pod Configuration:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg-pod
+  namespace: awesomeapps
+spec:
+  containers:
+    - name: foo
+      image: janedoe/awesomeapp:v1
+  imagePullSecrets:
+    - name: private-reg-cred
+```
+## How imagePullSecrets Works:
+`imagePullSecrets` tells Kubernetes to use a Secret that contains the credentials required to authenticate with the private registry to pull the image.
+## Creating Private Registry Credentials (Secret):
+```
+kubectl create secret docker-registry private-reg-cred \
+  --docker-server=<private-registry-url> \
+  --docker-username=<username> \
+  --docker-password=<password> \
+  --docker-email=<email> \
+  --namespace=awesomeapps
+
+```
