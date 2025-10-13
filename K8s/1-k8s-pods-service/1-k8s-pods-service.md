@@ -74,7 +74,7 @@ In Kubernetes, a ReplicaSet is a controller that ensures a specified number of i
 ##  How to communicate with pod to service?
 
 <p align="center">
-<img src="../image/Nginx-pod.png" width="700" height="300">
+<img src="../image/Nginx-pod.png" width="700" height="700">
 Pic 1: Nginx Pod
 </p>
 
