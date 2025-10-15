@@ -22,3 +22,24 @@ A Deployment in Kubernetes is a resource that manages a set of identical Pods an
     If a Pod managed by a Deployment fails or is deleted, Kubernetes automatically creates a new one to maintain the desired number of replicas, ensuring high availability.
 4. Declarative Updates:
     With Deployments, you can declaratively update your application. Kubernetes will automatically handle the rolling update process, replacing old Pods with new ones in a controlled manner, ensuring that there is no downtime.
+
+### Creating a Deployment
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:1.14.2
+```
