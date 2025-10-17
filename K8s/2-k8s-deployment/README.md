@@ -73,9 +73,19 @@ kubectl rollout status deployment/nginx-deployment
 ```bash
 kubectl describe deployment/nginx-deployment
 ```
-- To rollback to the previous version
+## rollback to the previous version
+- Now you have decided to undo the current rollback to rollback to  the previous version
 ```bash
 kubectl rollout undo deployment/nginx-deployment
+```
+- Alternative you can rollback to a specific version
+```bash 
+kubectl rollout undo deployment/nginx-deployment --to-revision=2
+```
+- check the rollback was successful
+```bash
+kubectl get deployment
+
 ```
 ### Delete a deployment
 ```bash
