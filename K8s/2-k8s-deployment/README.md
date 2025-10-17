@@ -1,12 +1,13 @@
 <h2>Deployment</h2>
 
-**Table of Contents**
-    - [ What is a Deployment](#what-is-a-deployment)
-    - [Key Purposes of a Deployment](#key-purposes-of-a-deployment)
-    - [Creating a Deployment](#creating-a-deployment)
-    - [Creating deployment file in imperative way](#Creating-deployment-file-in-imperative-way)
-    - [Update nginx deployment file](#update-nginx-deployment-file)
-    - [Rolling Back a Deployment](#rollback-to-the-previous-version)
+ **Table of Contents**
+- [ What is a Deployment](#what-is-a-deployment)  
+- [Key Purposes of a Deployment](#key-purposes-of-a-deployment)  
+- [Creating a Deployment](#creating-a-deployment)  
+- [Creating deployment file in imperative way](#Creating-deployment-file-in-imperative-way)  
+- [Update nginx deployment file](#update-nginx-deployment-file)  
+- [Rolling Back a Deployment](#rollback-to-the-previous-version)
+
     
 
 
