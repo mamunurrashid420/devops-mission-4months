@@ -16,14 +16,14 @@ A Deployment in Kubernetes is a resource that manages a set of identical Pods an
 ### Key Purposes of a Deployment
 1. `Scalability`:
     A Deployment helps you scale your application by adjusting the number of Pod replicas. You can easily scale up (increase replicas) or scale down (decrease replicas) based on traffic or load.
-2. Rollbacks:
+2. `Rollbacks`:
     Deployments allow you to roll back to a previous version of the application in case the new version causes issues. Kubernetes stores the history of changes, so you can quickly revert to an earlier, stable version.
-3. Self-Healing:
+3. `Self-Healing`:
     If a Pod managed by a Deployment fails or is deleted, Kubernetes automatically creates a new one to maintain the desired number of replicas, ensuring high availability.
-4. Declarative Updates:
+4. `Declarative Updates`:
     With Deployments, you can declaratively update your application. Kubernetes will automatically handle the rolling update process, replacing old Pods with new ones in a controlled manner, ensuring that there is no downtime.
 
-### Creating a Deployment
+## Creating a Deployment
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
