@@ -91,3 +91,21 @@ kubectl get deployment
 ```bash
 kubectl delete deployment/nginx-deployment
 ```
+
+### Scaling a Deployment
+- You can scale a Deployment by using following   command
+```bash
+kubectl scale deployment/nginx-deployment --replicas=5
+```
+- You can also scale a Deployment by editing the deployment file
+```bash
+kubectl edit deployment/nginx-deployment
+```
+- You can also scale a Deployment by using the following command
+```bash
+kubectl scale deployment/nginx-deployment --replicas=5
+```
+- Assuming horizontal pod autoscaling is enabled in your cluster
+```bash
+kubectl autoscale deployment/nginx-deployment --min=10 --max=15 --cpu-percent=80
+```
