@@ -1,13 +1,13 @@
 <h2>Deployment</h2>
 
 **Table of Contents**
-    - [What is a Deployment](# what-is-a-deployment)
+    - [ What is a Deployment](#what-is-a-deployment)
     - [Key Purposes of a Deployment](#key-purposes-of-a-deployment)
     - [Creating a Deployment](#creating-a-deployment)
-    - [Updating a Deployment](#updating-a-deployment)
-    - [Scaling a Deployment](#scaling-a-deployment)
-    - [Rolling Back a Deployment](#rolling-back-a-deployment)
-    - [Deleting a Deployment](#deleting-a-deployment)
+    - [Creating deployment file in imperative way](#Creating-deployment-file-in-imperative-way)
+    - [Update nginx deployment file](#update-nginx-deployment-file)
+    - [Rolling Back a Deployment](#rollback-to-the-previous-version)
+    
 
 
 ### What is a Deployment
@@ -47,7 +47,7 @@ spec:
 ```bash
 kubectl create deployment nginx-deployment --image=nginx:1.4.2 --replicas=3 --dry-run=client -o yaml > nginx-deployment.yaml
 ```
-## Update nginx  deployment file\
+## Update nginx  deployment file
 - Update  nginx pods to use the nginx:1.16.1 image instead of nginx:1.4.2
 ```bash
 kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
