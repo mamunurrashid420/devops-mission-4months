@@ -47,3 +47,12 @@ spec:
 ```bash
 kubectl create deployment nginx-deployment --image=nginx:1.4.2 --replicas=3 --dry-run=client -o yaml > nginx-deployment.yaml
 ```
+## Update nginx  deployment file\
+- Update  nginx pods to use the nginx:1.16.1 image instead of nginx:1.4.2
+```bash
+kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
+```
+- Alternative you can edit in deployment file
+```bash
+kubectl edit deployment/nginx-deployment
+```
