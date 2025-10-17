@@ -43,3 +43,7 @@ spec:
       - name: my-container
         image: nginx:1.14.2
 ```
+## Creating deployment file in imperative way
+```bash
+kubectl create deployment nginx-deployment --image=nginx:1.4.2 --replicas=3 --dry-run=client -o yaml > nginx-deployment.yaml
+```
