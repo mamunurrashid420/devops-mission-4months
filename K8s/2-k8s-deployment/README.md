@@ -56,3 +56,28 @@ kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
 ```bash
 kubectl edit deployment/nginx-deployment
 ```
+- If you want to see the rollout status,
+```bash
+kubectl rollout status deployment/nginx-deployment
+```
+### Rollback a deployment
+- suppose that you  made a type while updating the deployment by putting the image name as nginx:1.161 instead of nginx:1.16.1
+```
+kubectl set image deployment/nginx-deployment nginx=nginx:1.161
+```
+- The rollout get stuck . you can verify it by checking the rollout status 
+```bash
+kubectl rollout status deployment/nginx-deployment
+```
+- Describe the deployment to see the error
+```bash
+kubectl describe deployment/nginx-deployment
+```
+- To rollback to the previous version
+```bash
+kubectl rollout undo deployment/nginx-deployment
+```
+### Delete a deployment
+```bash
+kubectl delete deployment/nginx-deployment
+```
