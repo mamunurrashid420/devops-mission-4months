@@ -110,3 +110,9 @@ kubectl scale deployment/nginx-deployment --replicas=5
 ```bash
 kubectl autoscale deployment/nginx-deployment --min=10 --max=15 --cpu-percent=80
 ```
+
+### Deployment Strategy
+#### Recreate Deployment
+- All existing Pods are killed before new ones are created when .spec.strategy.type==Recreate.
+
+## Rolling Update Deployment
