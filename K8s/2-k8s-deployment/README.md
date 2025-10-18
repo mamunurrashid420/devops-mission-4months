@@ -139,3 +139,32 @@ strategy:
 - `maxSurge:1 ` - At most 1 extra pod can be created above the desired count.
 ## `Uses case`:
  `Best for production environments` - ideal when update is critical (e.g., web applications)
+
+## Rolling Update Strategy YAML
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+    template:
+      metadata: 
+        labels: 
+          app: myapp
+      spec:
+        containers:
+        - name: myapp-container
+          image: myapp:v2
+          ports:
+          - containerPort: 8080
+
+```
+A Deployment Strategy defines how Kubernetes replaces old Pods with new ones.
+Choosing the right strategy ensures smooth updates, zero downtime, and safe rollbacks for your applications.
+
