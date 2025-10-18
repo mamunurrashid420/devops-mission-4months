@@ -112,7 +112,30 @@ kubectl autoscale deployment/nginx-deployment --min=10 --max=15 --cpu-percent=80
 ```
 
 ### Deployment Strategy
-#### Recreate Deployment
-- All existing Pods are killed before new ones are created when .spec.strategy.type==Recreate.
+A deployment strategy in kubernetes defines `how updates or new versions of an application rolled out`- specifically, how old pods are replaced  with new pods during an update. 
+It determines whether the applications will experience downtime   and how fast or safely the new version will be deployed 
+## Many types of kubernetes Deployment strategies
 
+#### Recreate strategy
+- All existing Pods are killed before new ones are created .
+```bash 
+strategy:
+  type: Recreate
+```
+- `Uses case`: When old and new versions cannot run together (e.g., database migration)
 ## Rolling Update Deployment
+- The default strategy in kubernetes . Old pods are gradually replaced with new pods.
+  -  `Zero downtime` - users experience no interruption 
+  - Old and new versions run side by side for a short time.
+```bash
+
+strategy:
+  type: RollingUpdate 
+  rollingUpdate: 
+    maxUnavailable: 1
+    maxSurge: 1
+```
+- `maxUnavailable:1`- At most 1 pod can be unavailable during the update.
+- `maxSurge:1 ` - At most 1 extra pod can be created above the desired count.
+## `Uses case`:
+ `Best for production environments` - ideal when update is critical (e.g., web applications)
