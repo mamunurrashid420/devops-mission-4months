@@ -187,3 +187,34 @@ Once the new version (Green) is ready and tested, you switch traffic from Blue t
 Roll out the new version gradually to a small subset of users first. If everything looks good, extend it to all users.
 `Use Case:`
   - When testing new features or changes with minimal risk.
+
+
+## What are probes in kubernetes
+Probes are health checks that kubernetes uses to monitor the state of a pods containers. They help kubenetes decide when to restart trafice to a container.
+There are main two main types of probes 
+1. `Liveness Probe`: Checks if a container is running. If not, Kubernetes restarts it.
+2. `Readiness Probe`: Checks if a container is ready to serve requests. If not, Kubernetes doesn't send traffic to it.
+
+**Liveness Probe** 
+Checks if the container is healthy and still functioning properly. If it fails, Kubernetes kills the container and restarts it automatically.
+```yaml 
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+```
+**Readiness Probe**
+Checks if the container is ready to handle traffic.
+If the readiness probe fails, Kubernetes removes the Pod from the Service load balancer until it’s healthy again.
+```yaml 
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+```
