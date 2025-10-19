@@ -168,3 +168,22 @@ spec:
 A Deployment Strategy defines how Kubernetes replaces old Pods with new ones.
 Choosing the right strategy ensures smooth updates, zero downtime, and safe rollbacks for your applications.
 
+##  Blue-Green Deployment
+You run two environments — one current (Blue) and one new (Green).
+Once the new version (Green) is ready and tested, you switch traffic from Blue to Green.
+
+### Process:
+
+- Blue environment is live (old version).
+
+- Green environment is deployed with the new version.
+
+- Test the Green environment.
+
+- Switch traffic from Blue → Green.
+
+- Delete the old Blue environment after validation.
+### Canary Deployment
+Roll out the new version gradually to a small subset of users first. If everything looks good, extend it to all users.
+`Use Case:`
+  - When testing new features or changes with minimal risk.
