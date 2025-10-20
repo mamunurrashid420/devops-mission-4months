@@ -48,8 +48,8 @@ spec:
     limits.cpu: "2"
     limits.memory: 2Gi
 ```
-
-```
+## Namespace and Network
+- by default, pods in different namespaces can communicate with each other within the same Kubernetes cluster, unless you explicitly block it using a NetworkPolicy.
 
 ```bash
 kubectl create namespace <namespace-name>
