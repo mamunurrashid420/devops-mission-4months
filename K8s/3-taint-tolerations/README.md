@@ -18,6 +18,8 @@ Meaning- we say that only certain pods will run on this node and not others.
  - NoSchedule: New non-tolerant Pods won’t schedule.
 - PreferNoSchedule: Soft avoid.
 - NoExecute: Blocks new Pods and evicts existing non-tolerant Pods.
+
+**For node**
 ```yaml
 # taint add
 kubectl taint nodes node1 key=value:NoSechedule
@@ -46,7 +48,7 @@ spec:
 ```
 
 ## Tolerations
-Toleration =  permissionn not a guarantee
+`Toleration` =  permissionn not a guarantee
 - It lets the pod be eligible for that tainted node but it won't force placement there. if you want to actually land there, and labels  + nodeAffinity 
 
 
