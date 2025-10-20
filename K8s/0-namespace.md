@@ -34,6 +34,22 @@ prod/backend
 - **Simplified Management**: Separate  dev,staging, and production environment for safer, organized deployments.
 
 ## How to create Namespace?
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: team-a-quota
+  namespace: dev
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
+```
+
+```
 
 ```bash
 kubectl create namespace <namespace-name>
