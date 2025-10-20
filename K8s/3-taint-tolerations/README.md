@@ -13,6 +13,11 @@ Meaning- we say that only certain pods will run on this node and not others.
 
 ### Taint effects
 
-    - NoSchedule: New non-tolerant Pods won’t schedule.
-    - PreferNoSchedule: Soft avoid.
-    - NoExecute: Blocks new Pods and evicts existing non-tolerant Pods.
+ - NoSchedule: New non-tolerant Pods won’t schedule.
+- PreferNoSchedule: Soft avoid.
+- NoExecute: Blocks new Pods and evicts existing non-tolerant Pods.
+```yaml
+kubectl taint nodes node1 key=value:NoSechedule
+```
+- `key=value` - taint label
+- `NoSchedule` - taint effect 
