@@ -24,3 +24,45 @@ Key point of PVC:
 ## PV and PVC Relationship
 - Persistent volume is a actual storage in the cluster
 - Persistent volume claim is a request sent by the pod to use that storage.
+
+`PV create`
+```yaml 
+apiVersion:v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /data
+```
+**Explaination:**
+- `capacity`: Here is the 1Gi storage provided.
+- `accessModes`: `ReadWriteOnce`  means that this PV must be readable and writable from a single node.
+- `persistentVolumeReclaimPolicy`: Retain means that when the PVC is deleted, the PV will remain. This defines the retention policy for the PV, which can be Recycle, Retain, or Delete
+- `hostPath`: This PV points to the local directory /mnt/data, which will be within the node.
+
+`PVC create`
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+```
+Explanation:
+-  `accessModes`: `ReadWriteOnce`  means that this PVC must be readable and writable from a single node.
+- `resources`: Here is the 1Gi storage requested.
+- `storageClassName`: This PVC is requesting a PV with the storage class "`standard`".
