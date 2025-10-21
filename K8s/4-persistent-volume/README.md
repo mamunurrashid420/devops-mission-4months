@@ -19,3 +19,8 @@ Key point of PVC:
 - `User Request`: A PVC is a storage request from the user (or Pod). It essentially says, "I need some storage that meets these conditions."
 
 - `Binding`: Kubernetes finds an available PV for a PVC and binds them together. Once bound, the PVC and PV stay associated with each other until the PVC is fulfilled.
+
+
+## PV and PVC Relationship
+- Persistent volume is a actual storage in the cluster
+- Persistent volume claim is a request sent by the pod to use that storage.
