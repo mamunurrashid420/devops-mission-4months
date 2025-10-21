@@ -3,7 +3,10 @@ Taint and tolerations are very important scheduling concepts in kubernetes, whic
 
 **Table of contents:**
 
-    - [What is the taints](#what-is-the-taints)
+  - [What is the taints](#what-is-the-taints)
+  - [Tolerations](#tolerations)
+  - [Why are using taints and tolerations?](#why-are-using-taints-and-tolerations)
+- [Decision tree](#decision-tree)
 
 ## Why are using taints and tolerations?
 
