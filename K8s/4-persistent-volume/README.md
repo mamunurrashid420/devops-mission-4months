@@ -11,3 +11,11 @@ Persistent volume is part  of the cluster that is used for long term storage. It
 - `Cluster-wide`: PV are cluster-wide resource that pods can provided access to.
 - `Lifecycle`: PV have lifecycle independent of my pods. PV remains as persistent storage and is independent of the pods lifecycle.
 - `Typs of Volume`: There can be various type of PVs, such as AWS EBS,GCE Persistent disk , NFS,iSCSI, etc.
+
+## Persistent volume claim(PVC)
+<p> A persistent volume claim is a request that comes from pods or workloads, specifying the required storage capacity and other requirements. PVC is binding request that gets asscoiated with a persistent volume (pv)</p>
+
+Key point of PVC:
+- `User Request`: A PVC is a storage request from the user (or Pod). It essentially says, "I need some storage that meets these conditions."
+
+- `Binding`: Kubernetes finds an available PV for a PVC and binds them together. Once bound, the PVC and PV stay associated with each other until the PVC is fulfilled.
