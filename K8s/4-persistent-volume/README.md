@@ -62,7 +62,71 @@ spec:
       storage: 1Gi
   storageClassName: standard
 ```
-Explanation:
+**Explanation:**
 -  `accessModes`: `ReadWriteOnce`  means that this PVC must be readable and writable from a single node.
 - `resources`: Here is the 1Gi storage requested.
 - `storageClassName`: This PVC is requesting a PV with the storage class "`standard`".
+
+## AWS EBS
+`For ebs storage class`
+```yaml 
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata: 
+  name: ebs-storage
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2 #gp2 general purpose
+```
+`For ebs pV`
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ebs-pv
+spec: 
+  capacity: 
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  PersistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs-storage
+  awsElasticBlockStore:
+    volumeID: <volume-id>
+    fsType: ext4
+```
+FOr PVC
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ebs-storage
+```
+Using pv in pod
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: ebs-storage
+  volumes:
+  - name: ebs-storage
+    persistentVolumeClaim:
+      claimName: ebs-pvc
+```
+
+
