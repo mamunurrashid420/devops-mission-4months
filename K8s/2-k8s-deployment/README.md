@@ -93,6 +93,11 @@ kubectl get deployment
 kubectl delete deployment/nginx-deployment
 ```
 
+## Kubernetes core feature 
+ Maximum availability of application
+ maximum unavailable pods = 1
+ maximum surge pods = 1
+
 ### Scaling a Deployment
 - You can scale a Deployment by using following   command
 ```bash
