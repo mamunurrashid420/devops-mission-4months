@@ -27,3 +27,19 @@ Because etcd follows the `quorum` rule.
 - 1 master -> quorum =1 -> no fault tolerance
 - 2 master -> quorum = 2 -> If one fails quorum is breaks 
 - 3 master -> quorum = 2 -> cluster fails works even if one fails 
+
+## Raft Algorithm
+- Raft is a consensus algorithm that keeps multiple nodes in agreement about a shared `state` — like who the leader is and what the latest data looks like.
+
+- In an etcd cluster, all nodes are equal, but Raft elects one as the leader.
+
+- All write operations (create, update, delete) first go to the leader node.
+
+- The leader then replicates the change to all the follower nodes.
+
+- Once a majority (quorum) of nodes confirm the change, it’s considered committed, and all nodes apply it
+
+### Raft visualization
+
+[![Raft Visualization](https://raft.github.io/raftscope/screenshot.png)](https://raft.github.io/raftscope/)
+
