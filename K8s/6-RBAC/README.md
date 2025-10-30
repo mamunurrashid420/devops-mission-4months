@@ -77,5 +77,25 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
+### To create a Role and RoleBinding imperatively in Kubernetes
 
 
+```bash
+kubectl create role pod-reader --verb=get,list,watch --resource=pods --namespace=default
+kubectl create rolebinding pod-reader-binding --role=pod-reader --user=bob --namespace=default
+kubectl -n default get pod server --as bob
+kubectl -n default delete pod server --as bob
+```
+## To create a ClusterRole and Cluster RoleBinding imperatively in Kubernetes
+```bash
+kubectl create clusterrole pod-reader --verb=get,list,watch --resource=pods
+kubectl create clusterrolebinding bob-admin-binding --clusterrole=pod-reader --user=bob
+kubectl run nginx --image nginx --as bob
+```
+
+```
+kubectl create clusterrole dev-cluster-role --verb=get,list,watch,create --resource=pods
+kubectl create clusterrolebinding dev-admin-binding --clusterrole=dev-cluster-role --user=mamun
+kubectl run server --image nginx -n default --as mamun
+kubectl -n default delete pod server --as mamun
+```
