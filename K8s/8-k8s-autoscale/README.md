@@ -23,3 +23,12 @@ Steps 2. Install the metrics server
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 ```
+First, get the name of the Metric Server pod.
+`kubectl get pods -n kube-system | grep metrics-server`
+
+If you want to see the top pods based on CPU.
+`kubectl top pods --sort-by cpu -A`
+And to see the top pods based on memory usage.
+`kubectl top pods --sort-by memory`
+
+
