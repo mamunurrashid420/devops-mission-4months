@@ -31,4 +31,76 @@ If you want to see the top pods based on CPU.
 And to see the top pods based on memory usage.
 `kubectl top pods --sort-by memory`
 
+## Deploy a sample application
+```yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          limits:
+            cpu: "200m" # Set CPU resource limit
+          requests:
+            cpu: "100m" # Set CPU resource request
+```
+Create the kubernetes service for nginx 
+```yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+  ```
+## apply HPA 
+```
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 30
+  ```
+
+  If you want to configure imperative 
+  ```
+  kubectl autoscale deployment nginx-deployment --cpu-percent=30 --min=2 --max=10
+  ```
+  ## Increase Load to the Application
+  ```
+  kubectl run -i --tty load-generator --image=busybox /bin/sh
+  ```
+  ```
+  while true; do wget -q -O- http://nginx-service; done
+  ```
+  ## Monitor Events
+  ```
+
+
+    
 
