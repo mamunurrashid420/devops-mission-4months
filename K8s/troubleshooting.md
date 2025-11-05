@@ -70,3 +70,7 @@ checking this issue
     kube-system       kube-proxy-wc5ls                           1/1     Running   1 (2m22s ago)   16h
     kube-system       kube-scheduler-master                      1/1     Running   1 (2m22s ago)   16h
     tigera-operator   tigera-operator-789496d6f5-gsqr2           1/1     Running   1 (2m22s ago)   16h
+
+
+## Liveness, Readiness, and Startup Probes
+1. Livenes probe
