@@ -67,3 +67,55 @@ spec:
 ## Dicision tree
 - `Taint + Toleration`: Normal pods won't be go to this node, only specific ones.
 - `Node affinity and anti-affinity`:` Its better to go to that node but its okay if you don't.
+
+## Affinity and anti-affinity
+Affinity and Anti-Affinity are Kubernetes scheduling rules that control where pods should (or should not) be placed based on node labels or other pods already running in the cluster.
+
+### 1. Node Affinity
+Node affinity defines which nodes a pod can be scheduled on based on labels assigned to nodes.
+```yaml 
+
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-type
+            operator: In
+            values:
+            - high-memory
+```
+- This pod will be only run on nodes labeld with `node-type: high-memory`
+
+### 2. Pod affinity
+Pod affinity defines the rules that allow a pod to be scheduled near another pod.same node or zone
+```yaml 
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - frontend
+        topologyKey: "kubernetes.io/hostname"
+```
+### 3. Pod anti-affinity
+Pod Anti-Affinity ensures Pods are not placed together on the same node
+```yaml 
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - frontend
+        topologyKey: "kubernetes.io/hostname"
+```
+- ensures no two Pods with `app=frontend` run on the same node.
