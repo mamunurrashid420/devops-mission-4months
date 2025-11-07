@@ -70,3 +70,5 @@ A Stateless application is an application that does not store any data or state 
 - Easy scalable in pods 
 - If any pods are died kubernetes will easy create new pods- there is no data loss here 
 - light weight and fast
+## Headless 
+- don't need load balancer and single IP
