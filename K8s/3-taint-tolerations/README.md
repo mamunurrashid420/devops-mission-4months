@@ -70,6 +70,12 @@ spec:
 
 ## Affinity and anti-affinity
 Affinity and Anti-Affinity are Kubernetes scheduling rules that control where pods should (or should not) be placed based on node labels or other pods already running in the cluster.
+## Node Selector
+`kubectl get node k8-worker1 --show-labels `
+
+`kubectl label nodes k8-worker1 environment=production`
+
+
 
 ### 1. Node Affinity
 Node affinity defines which nodes a pod can be scheduled on based on labels assigned to nodes.
