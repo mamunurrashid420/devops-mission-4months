@@ -74,3 +74,15 @@ checking this issue
 
 ## Liveness, Readiness, and Startup Probes
 1. Livenes probe
+
+
+## kubectl patch 
+kubectl patch command is used to modify the configuration of an existing Kubernetes resource (such as a Pod, Deployment, or Service) `without applying the entire YAML file again`.
+
+The meaning of `kubectl patch` is - 
+*instead of changing the entire configuration, it updates only a small part of it.*
+
+If i am updating replicas in deployment yaml file. like 3 to 5 
+```
+kubectl patch deployment myapp-deployment -p '{"spec":{"replicas":5}}'
+```
