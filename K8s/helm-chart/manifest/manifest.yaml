@@ -63,8 +63,112 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:5.7
-          envFrom:
-            - secretRef:
-                name: mysql-secret
-            - configMapRef:
+          image: {? {.Values.mysql.image: ''} : ''}
+          resources:
+            requests:
+              cpu: {? {.Values.mysql.resources.requests.cpu: ''} : ''}
+              memory: {? {.Values.mysql.resources.requests.memory: ''} : ''}
+            limits:
+              cpu: {? {.Values.mysql.resources.limits.cpu: ''} : ''}
+              memory: {? {.Values.mysql.resources.limits.memory: ''} : ''}
+            env:
+              - name: MYSQL_ROOT_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-secret
+                    key: MYSQL_ROOT_PASSWORD
+              - name: MYSQL_DATABASE
+                valueFrom:
+                  configMapKeyRef:
+                    name: mysql-config
+                    key: MYSQL_DATABASE
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+
+# mysql service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+# Bank app Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-app
+spec:
+  selector:
+    matchLabels:
+      app: bank-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bank-app
+    spec:
+      containers:
+        - name: bank-app
+          image: {? {.Values.bankapp.image: ''} : ''}
+          resources:
+            requests:
+              memory: {? {.Values.bankapp.resources.requests.memory: ''} : ''}
+              cpu: {? {.Values.bankapp.resources.requests.cpu: ''} : ''}
+            limits:
+              memory: {? {.Values.bankapp.resources.limits.memory: ''} : ''}
+              cpu: {? {.Values.bankapp.resources.limits.cpu: ''} : ''}
+            ports:
+              - containerPort: 8080
+                name: http
+                protocol: TCP
+
+# bank app service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-app
+spec:
+  selector:
+    app: bank-app
+  ports:
+    - containerPort: 8080
+      name: http
+      protocol: TCP
+  env:
+    - name: SPRING_DATASOURCE_URL
+      value: jdbc:mysql://mysql:3306/{{ .Values.mysql.database | b64enc '' }}
+    - name: SPRING_DATASOURCE_USERNAME
+      value: root
+    - name: SPRING_DATASOURCE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mysql-secret
+          key: MYSQL_ROOT_PASSWORD
+# Bank app service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-app
+spec:
+  type: {? {.Values.service.type: ''} : ''}
+  selector:
+    app: bank-app
+  ports:
+    - port: {? {.Values.service.port: ''} : ''}
+      targetPort: 8080
