@@ -1,0 +1,35 @@
+mysql:
+  image: "mysql:5.7"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+  rootPassword: "root"
+  database: "Bank"
+  pvc:
+    enabled: true
+    size: 1Gi
+  service:
+    type: ClusterIP
+bankapp:
+  image: "bankapp:latest"
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+  service:
+    type: LoadBalancer
+    port: 80
+storageClass:
+  name: "ebs-sc"
+  type: "gp2"
+  reclaimPolicy: "Retain"
+  fsType: "ext4"
+  volumeBindingMode: waitForFirstConsumer

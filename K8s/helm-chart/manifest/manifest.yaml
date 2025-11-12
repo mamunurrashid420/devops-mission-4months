@@ -1,0 +1,70 @@
+## Secrets for Mysql
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: {? {.Values.mysql.rootPassword | b64enc: ''} : ''}
+
+## Configmap for mysql
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  MYSQL_DATABASE: {? {.Values.mysql.database | b64enc: ''} : ''}
+
+# storage class for ebs
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: kubernetes.io/aws-ebs #ebs.csi.aws.com
+parameters:
+  type: {? {.Values.storageclass.type: ''} : ''}
+  fsType: {? {.Values.storageclass.fsType: ''} : ''}
+  encrypted: "true"
+reclaimPolicy: {? {.Values.storageclass.reclaimPolicy: ''} : ''}
+VolumeBindingMode: {? {.Values.storageclass.volumeBindingMode: ''} : ''}
+
+## persistent volume claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {? {.Values.mysql.pvc.size: ''} : ''}
+  storageClassName: {? {.Values.storageclass.name: ''} : ''}
+
+## Mysql Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.7
+          envFrom:
+            - secretRef:
+                name: mysql-secret
+            - configMapRef:
